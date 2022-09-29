@@ -50,7 +50,7 @@ body {
 }
 
 .topbar .wrapper .topbar-wrapper:after {
-    content: 'Webman Auto Route';
+    content: 'qnnp/annotation-route';
     display: block;
     color: #fff;
     position: absolute;

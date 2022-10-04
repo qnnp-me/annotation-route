@@ -57,7 +57,7 @@ class AutoRoute {
     }
 
     // OPTIONS 请求方法处理
-    Route::options('/{all:.*}', function () { return response(''); });
+    // Route::options('/{all:.*}', function () { return response(''); });
   }
 
   /**

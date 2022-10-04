@@ -31,9 +31,9 @@ AutoRoute::load(
  */
 Route::disableDefaultRoute();
 
-Route::any(
-  '/{path: .+}',
-  function () {
-    return Result::jsonError('资源不存在', 404, 404);
-  }
-);
+// Route::any(
+//   '/{path: .+}',
+//   function () {
+//     return Result::jsonError('资源不存在', 404, 404);
+//   }
+// );

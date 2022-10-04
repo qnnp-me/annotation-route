@@ -46,8 +46,8 @@ class Route {
    *
    * @param string                $route <span style="color:#E97230;">路由 Path</span>
    *
-   * @param string|array          $methods <span style="color:#E97230;">路由方法 'get'|[get, head, post, put, delete, connect,
-   *   options, trace] </span>
+   * @param string|array          $methods <span style="color:#E97230;">路由方法 'get'|[get, head, post, put, delete,
+   *   connect, options, trace] </span>
    *
    * @param array                 $middleware <span style="color:#E97230;">路由中间件</span>
    * <a href="https://www.workerman.net/doc/webman#/middleware" style="color:#5A9BF6;">Webman 中间件介绍</a>
@@ -199,8 +199,7 @@ class Route {
    * <a href="https://swagger.io/specification/#operation-object" style="color:#5A9BF6;">规范文档</a>
    * <div style="color:#E97230;">用于扩展方法的选项、也可以用于强制替换方法选项</div>
    *
-   * @param string|null           $g_openapi <span style="color:#E97230;">[OpenAPI] OpenAPI 规范版本
-   *   (此行以下参数全局声明一次即可)</span>
+   * @param string|null           $g_openapi <span style="color:#E97230;">[OpenAPI] OpenAPI 规范版本(此行以下参数全局声明一次即可)</span>
    *
    * @param array|info            $g_info <span style="color:#E97230;">[OpenAPI] 文档信息</span>
    * <pre style="color:#3982F7;">[

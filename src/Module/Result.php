@@ -44,14 +44,13 @@ class Result {
       }
     }
     $trace && $_data['trace'] = $trace;
-    $result = new Response(
+
+    return new Response(
       $http_code, ['Content-Type' => 'application/json', ...$headers],
       json_encode(
         $_data,
         $options
       )
     );
-
-    return $result;
   }
 }

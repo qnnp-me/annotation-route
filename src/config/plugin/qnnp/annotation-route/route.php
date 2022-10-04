@@ -25,15 +25,17 @@ AutoRoute::load(
 );
 
 /**
- * 因注解路由可注解加载中间件
- * 防止需要中间件的被直接加载
- * 安全起见关闭默认路由
+ * 因为本注解路由可通过注解加载中间件
+ * 为防止注解的中间件不被加载就被请求
+ * 安全起见关闭默认路由功能
  */
 Route::disableDefaultRoute();
 
-// Route::any(
-//   '/{path: .+}',
-//   function () {
-//     return Result::jsonError('资源不存在', 404, 404);
-//   }
-// );
+/**
+ *
+ */
+Route::fallback(
+  function () {
+    return Result::jsonError('资源不存在', 404, 404);
+  }
+);

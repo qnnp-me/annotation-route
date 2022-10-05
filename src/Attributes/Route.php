@@ -502,7 +502,7 @@ class Route {
   /**
    * <h2 style="color:#E97230;">注册到 OpenAPI</h2>
    */
-  public function addToOpenAPI() {
+  public function addToOpenAPI(): void {
     if ($this->openapi || ($this->openapi !== false && str_starts_with($this->path, '/api/'))) {
 
       // 处理路由路径

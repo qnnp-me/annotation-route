@@ -14,10 +14,9 @@
 namespace Qnnp\AnnotationRoute\Module;
 
 use Exception;
+use Qnnp\AnnotationRoute\Attributes\Route as RouteAttribute;
 use ReflectionClass;
 use ReflectionException;
-use Webman\Route;
-use Qnnp\AnnotationRoute\Attributes\Route as RouteAttribute;
 
 
 class AutoRoute {
@@ -31,9 +30,11 @@ class AutoRoute {
    * @param array $list <span style="color:#E97230;">需要另外加载的目录</span>
    *                    <pre style="color:#E97230;">[ [命名空间根, 目录绝对路径], ...array]</pre>
    *
+   * @param bool  $openapi <span style="color:#E97230;">OpenAPI 文档开关（默认：true）</span>
+   *
    * @throws ReflectionException
    */
-  static function load(array $list = [], $openapi = true) {
+  static function load(array $list = [], bool $openapi = true): void {
     static::$openapi = $openapi;
     $class_list      = [];
     // 扫描 /app 目录所有可用文件
@@ -67,7 +68,7 @@ class AutoRoute {
    * @param string $dir <span style="color:#E97230;">目录</span>
    * @param array  $class_list <span style="color:#E97230;">引用列表</span>
    */
-  protected static function scanClass(string $base_namespace, string $dir, array &$class_list) {
+  protected static function scanClass(string $base_namespace, string $dir, array &$class_list): void {
     $dir = realpath($dir);
 
     /**
@@ -104,12 +105,12 @@ class AutoRoute {
     $items = scandir($dir);
     $files = [];
     foreach ($items as $item) {
-      if (!preg_match("/(^\..*|model|view)/", $item)) {
+      if (!preg_match("/^(^\..*|model|view)/", $item)) { // 跳过所有 . 开头文件夹和 model、view 文件夹
         $item_path = $dir . DIRECTORY_SEPARATOR . $item;
         if (is_dir($item_path)) {
           array_push($files, ...static::scanFiles($item_path));
         } elseif (preg_match("/\.php$/i", $item)) {
-          array_push($files, $item_path);
+          $files[] = $item_path;
         }
       }
     }
@@ -126,7 +127,7 @@ class AutoRoute {
    * @throws ReflectionException
    * @throws Exception
    */
-  protected static function scanRoute(string $class, string $namespace) {
+  protected static function scanRoute(string $class, string $namespace): void {
     /** 给定类的反射类 */
     $ref = new ReflectionClass($class);
     /** 获取类里的所有方法 */
@@ -150,26 +151,28 @@ class AutoRoute {
         $arguments = $attribute->getArguments();
 
         /** 读取路由Path */
-        $path = preg_replace("/^\.\//", '', isset($arguments[0]) ? $arguments[0] : $arguments['route']);
+        $path = preg_replace("/^\.\//", '', $arguments[0] ?? $arguments['route'] ?? '');
+
+        if ($path === '') {
+          $path = $method->name === 'index' ? '' : $method->name;
+        }
 
         // 路由对应方法
         $callback = $ref->name . '@' . $method->name;
 
         /** 相对路径子路由处理 */
         if (!preg_match("/^[\/\\\]/", $path)) {
-          // 获取路由基本路径
-          $basePath = str_replace(
-            "\\",
-            '/',
-            str_replace(
-              preg_replace("/^(\\\)/", '', $namespace),
-              '',
-              $ref->name
-            )
-          );
-
           // 驼峰转换
-          $basePath = strtolower(preg_replace("/([a-z])([A-Z])/", "$1-$2", $basePath));
+          $basePath      = strtolower(preg_replace("/([a-z])([A-Z])/", "$1-$2", $ref->name));
+          $baseNamespace = strtolower(preg_replace("/([a-z])([A-Z])/", "$1-$2", $namespace));
+
+          // 反斜杠处理
+          $basePath      = str_replace('\\', '/', $basePath);
+          $baseNamespace = str_replace('\\', '/', $baseNamespace);
+          $baseNamespace = preg_replace('/^\//', '', $baseNamespace); // 去除用户可能携带的开头斜杠
+
+          // 去除基本命名空间开头
+          $basePath = str_replace($baseNamespace, '', $basePath);
 
           // 路径中移除 controller 目录
           $basePath = str_replace('/controller', '', $basePath);
@@ -179,10 +182,13 @@ class AutoRoute {
           // 拼接实际路径
           $path = $basePath . (empty($path) ? '' : '/' . $path);
         }
-
+        $path = str_replace('-controller/', '/', $path);
+        $path = preg_replace('/\-controller$/', '', $path);
+        // 驼峰转换
+        $path = strtolower(preg_replace("/([a-z])([A-Z])/", "$1-$2", $path));
+        
         /** 设置路由路径 */
         $route->path = (string)$path;
-
         /** 添加路由 */
         $route->add($callback);
 

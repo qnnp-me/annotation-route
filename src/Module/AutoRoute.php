@@ -163,8 +163,8 @@ class AutoRoute {
         /** 相对路径子路由处理 */
         if (!preg_match("/^[\/\\\]/", $path)) {
           // 驼峰转换
-          $basePath      = strtolower(preg_replace("/([a-z])([A-Z])/", "$1-$2", $ref->name));
-          $baseNamespace = strtolower(preg_replace("/([a-z])([A-Z])/", "$1-$2", $namespace));
+          $basePath      = strtolower(preg_replace("/([a-z0-9])([A-Z])/", "$1-$2", $ref->name));
+          $baseNamespace = strtolower(preg_replace("/([a-z0-9])([A-Z])/", "$1-$2", $namespace));
 
           // 反斜杠处理
           $basePath      = str_replace('\\', '/', $basePath);
@@ -185,7 +185,7 @@ class AutoRoute {
         $path = str_replace('-controller/', '/', $path);
         $path = preg_replace('/\-controller$/', '', $path);
         // 驼峰转换
-        $path = strtolower(preg_replace("/([a-z])([A-Z])/", "$1-$2", $path));
+        $path = strtolower(preg_replace("/([a-z0-9])([A-Z])/", "$1-$2", $path));
         
         /** 设置路由路径 */
         $route->path = (string)$path;

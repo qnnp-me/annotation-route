@@ -15,25 +15,25 @@ namespace Qnnp\AnnotationRoute\Attributes;
 
 use Attribute;
 use FastRoute\RouteParser\Std;
-use Qnnp\AnnotationRoute\Module\OpenAPI;
-use Qnnp\AnnotationRoute\Module\OpenAPI\components;
-use Qnnp\AnnotationRoute\Module\OpenAPI\externalDoc;
-use Qnnp\AnnotationRoute\Module\OpenAPI\info;
-use Qnnp\AnnotationRoute\Module\OpenAPI\media;
-use Qnnp\AnnotationRoute\Module\OpenAPI\operation;
-use Qnnp\AnnotationRoute\Module\OpenAPI\parameter;
-use Qnnp\AnnotationRoute\Module\OpenAPI\post;
-use Qnnp\AnnotationRoute\Module\OpenAPI\requestBody;
-use Qnnp\AnnotationRoute\Module\OpenAPI\response;
-use Qnnp\AnnotationRoute\Module\OpenAPI\schema;
-use Qnnp\AnnotationRoute\Module\OpenAPI\securityScheme;
-use Qnnp\AnnotationRoute\Module\OpenAPI\server;
-use Qnnp\AnnotationRoute\Module\OpenAPI\tag;
-use Qnnp\AnnotationRoute\Module\Validator;
+use Qnnp\AnnotationRoute\Module\{OpenAPI,
+  OpenAPI\components,
+  OpenAPI\externalDoc,
+  OpenAPI\info,
+  OpenAPI\media,
+  OpenAPI\operation,
+  OpenAPI\parameter,
+  OpenAPI\post,
+  OpenAPI\requestBody,
+  OpenAPI\response,
+  OpenAPI\schema,
+  OpenAPI\securityScheme,
+  OpenAPI\server,
+  OpenAPI\tag,
+  Validator
+};
 use ReflectionMethod;
 use support\Request;
-use Webman\Route as RouteClass;
-use Webman\Route\Route as RouteObject;
+use Webman\{Route as RouteClass, Route\Route as RouteObject};
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD)]
 class Route {
@@ -199,80 +199,6 @@ class Route {
    * <a href="https://swagger.io/specification/#operation-object" style="color:#5A9BF6;">规范文档</a>
    * <div style="color:#E97230;">用于扩展方法的选项、也可以用于强制替换方法选项</div>
    *
-   * @param string|null           $g_openapi <span style="color:#E97230;">[OpenAPI] OpenAPI 规范版本(此行以下参数全局声明一次即可)</span>
-   *
-   * @param array|info            $g_info <span style="color:#E97230;">[OpenAPI] 文档信息</span>
-   * <pre style="color:#3982F7;">[
-   *    'title'          => '项目名称',
-   *    'description'    => '项目描述',
-   *    'version'        => '0.0.0',
-   *    'termsOfService' => 'http://localhost/service.html',
-   *    'contact'        => [
-   *        'name'  => '联系人',
-   *        'url'   => 'http://localhost/contact.html',
-   *        'email' => 'example@example.com'
-   *    ],
-   *    'license'        => [
-   *        'name' => 'API许可',
-   *        'url'  => 'http://localhost/license.html'
-   *    ]
-   *]</pre>
-   *
-   * @param array|server          $g_servers <span style="color:#E97230;">[OpenAPI] 接口服务器列表</span>
-   * <pre style="color:#3982F7;">[
-   *    [
-   *        'url'         => 'https://development.gigantic-server.com/v1',
-   *        'description' => 'Development server'
-   *    ],
-   *    [
-   *        'url'         => 'https://{username}.gigantic-server.com:{port}/{basePath}',
-   *        'description' => 'The production API server',
-   *        'variables'   => [
-   *            'username' => [
-   *                'default'     => 'demo',
-   *                'description' => 'description'
-   *            ],
-   *            'port'     => [
-   *                'default'     => 'demo',
-   *                'enum'        => [
-   *                    '8443',
-   *                    '443',
-   *                ]
-   *            ],
-   *            'basePath' => [
-   *                'default'     => 'v2',
-   *            ],
-   *        ]
-   *    ],
-   *    ...
-   *]</pre>
-   *
-   * @param array|components      $g_components <span style="color:#E97230;">[OpenAPI] 公共组件</span>
-   * <a href="https://swagger.io/specification/#components-object" style="color:#5A9BF6;">规范文档</a>
-   *
-   * @param array|securityScheme  $g_securitySchemes <span style="color:#E97230;">[OpenAPI] 认证方式声明</span>
-   * <a href="https://swagger.io/specification/#security-scheme-object" style="color:#5A9BF6;">规范文档</a>
-   *
-   * @param array                 $g_security <span style="color:#E97230;">[OpenAPI] 全局可选认证方式</span>
-   * <a href="https://swagger.io/specification/#security-requirement-object" style="color:#5A9BF6;">规范文档</a>
-   *
-   * @param array|tag             $g_tags <span style="color:#E97230;">[OpenAPI] Tag 描述列表</span>
-   * <pre style="color:#3982F7;">[
-   *    'name'         => '标签名称',
-   *    'description'  => '标签描述',
-   *    'externalDocs'    => [
-   *        'description' => '外部文档描述',
-   *        'url'         => '外部文档链接',
-   *    ]
-   *]</pre>
-   *
-   * @param array|externalDoc     $g_externalDocs <span style="color:#E97230;">[OpenAPI] 服务器列表</span>
-   * <a href="https://swagger.io/specification/#server-object" style="color:#5A9BF6;">规范文档</a>
-   *
-   * @param OpenAPI\openapi|array $g_extend <span style="color:#E97230;">[OpenAPI] 全局扩展选项</span>
-   * <a href="https://swagger.io/specification/#openapi-object" style="color:#5A9BF6;">规范文档</a>
-   * <div style="color:#E97230;">用于扩展根对象下的选项、也可以用于强制替换全局设置</div>
-   *
    * @param string|null           $Openapi <span style="color:#E97230;">[OpenAPI] OpenAPI 规范版本  (此行以下参数全局声明一次即可)</span>
    *
    * @param array|info            $Info <span style="color:#E97230;">[OpenAPI] 文档信息</span>
@@ -356,7 +282,7 @@ class Route {
     protected string                $route = '',
     protected string|array          $methods = 'get',
     protected array                 $middleware = [],
-    protected ?bool                 $openapi = null,
+    protected bool                  $openapi = true,
     protected array|parameter       $cookie = [],
     protected array|parameter       $header = [],
     protected array|parameter       $get = [],
@@ -369,7 +295,7 @@ class Route {
     protected string                $summary = '',
     protected string                $description = '',
     protected externalDoc|array     $externalDocs = [],
-    protected ?string               $operationId = null,
+    protected string                $operationId = '',
     protected array|parameter       $parameters = [],
     protected requestBody|array     $requestBody = [],
     protected response|array        $responses = [],
@@ -379,17 +305,7 @@ class Route {
     protected server|array          $servers = [],
     protected operation|array       $extend = [],
 
-    protected ?string               $g_openapi = null,
-    protected array|info            $g_info = [],
-    protected server|array          $g_servers = [],
-    protected array|components      $g_components = [],
-    protected securityScheme|array  $g_securitySchemes = [],
-    protected array                 $g_security = [],
-    protected array|tag             $g_tags = [],
-    protected externalDoc|array     $g_externalDocs = [],
-    protected array|OpenAPI\openapi $g_extend = [],
-
-    protected ?string               $Openapi = null,
+    protected string                $Openapi = '',
     protected array|info            $Info = [],
     protected server|array          $Servers = [],
     protected array|components      $Components = [],
@@ -401,16 +317,6 @@ class Route {
 
     protected                       $validator = null
   ) {
-    $this->g_openapi         = $this->Openapi;
-    $this->g_info            = $this->Info;
-    $this->g_servers         = $this->Servers;
-    $this->g_components      = $this->Components;
-    $this->g_securitySchemes = $this->SecuritySchemes;
-    $this->g_security        = $this->Security;
-    $this->g_tags            = $this->Tags;
-    $this->g_externalDocs    = $this->ExternalDocs;
-    $this->g_extend          = $this->Extend;
-
 
     // 路由路径预处理
     $this->path = (string)preg_replace("/^\.\//", '', $this->route);
@@ -430,35 +336,25 @@ class Route {
     ];
 
     // 响应值
-    $this->responses = array_replace_recursive(['default' => ['description' => '']], $this->responses);
+    $this->responses = array_replace_recursive(
+      [
+        'default' => [
+          'content' => ['application/json' => []]
+        ]
+      ],
+      $this->responses
+    );
 
     /** 全局设置 */
-    count($this->g_info) > 0 &&
-    OpenAPI::setInfo($this->g_info);
-
-    count($this->g_tags) > 0 &&
-    OpenAPI::setTags($this->g_tags);
-
-    count($this->g_extend) > 0 &&
-    OpenAPI::setExtend($this->g_extend);
-
-    count($this->g_servers) > 0 &&
-    OpenAPI::setServers($this->g_servers);
-
-    count($this->g_security) > 0 &&
-    OpenAPI::setSecurity($this->g_security);
-
-    count($this->g_components) > 0 &&
-    OpenAPI::setComponents($this->g_components);
-
-    count($this->g_externalDocs) > 0 &&
-    OpenAPI::setExternalDocs($this->g_externalDocs);
-
-    $this->g_openapi &&
-    OpenAPI::setOpenAPIVersion($this->g_openapi);
-
-    count($this->g_securitySchemes) > 0 &&
-    OpenAPI::setSecuritySchemes($this->g_securitySchemes);
+    OpenAPI::setOpenAPIVersion($this->Openapi);
+    OpenAPI::setInfo($this->Info);
+    OpenAPI::setServers($this->Servers);
+    OpenAPI::setComponents($this->Components);
+    OpenAPI::setSecuritySchemes($this->SecuritySchemes);
+    OpenAPI::setSecurity($this->Security);
+    OpenAPI::setTags($this->Tags);
+    OpenAPI::setExternalDocs($this->ExternalDocs);
+    OpenAPI::setExtend($this->Extend);
   }
 
   /**
@@ -503,7 +399,11 @@ class Route {
    * <h2 style="color:#E97230;">注册到 OpenAPI</h2>
    */
   public function addToOpenAPI(): void {
-    if ($this->openapi || ($this->openapi !== false && str_starts_with($this->path, '/api/'))) {
+    if (
+      $this->openapi
+      && !str_starts_with($this->path, '/swagger')
+      && !str_starts_with($this->path, '/openapi.json')
+    ) {
 
       // 处理路由路径
       $paths       = (new Std)->parse($this->path)[0];
@@ -572,12 +472,13 @@ class Route {
       ];
       $this->deprecated && $operation['deprecated'] = $this->deprecated;
       count($tags) > 0 && $operation['tags'] = $tags;
-      is_string($this->operationId) && $operation['operationId'] = $this->operationId;
       count($parameters) > 0 && $operation['parameters'] = $parameters;
       count($this->externalDocs) > 0 && $operation['externalDocs'] = $this->externalDocs;
       count($this->callbacks) > 0 && $operation['callbacks'] = $this->callbacks;
       count($this->servers) > 0 && $operation['servers'] = $this->servers;
       count($this->security) > 0 && $operation['security'] = $this->security;
+
+        $this->operationId ?? $operation['operationId'] = $this->operationId;
 
       if (count($this->requestBody) > 0) {
         $body = $this->requestBody;

@@ -10,91 +10,66 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  */
 html {
-    box-sizing: border-box;
-    overflow: -moz-scrollbars-vertical;
-    overflow-y: scroll;
+  box-sizing: border-box;
+  overflow: -moz-scrollbars-vertical;
+  overflow-y: auto;
 }
-
 *,
 *:before,
 *:after {
-    box-sizing: inherit;
+  box-sizing: inherit;
 }
-
 body {
-    margin: 0;
-    background: #fafafa;
+  margin: 0;
+  background: #fafafa;
 }
-
 #footer {
-    text-align: center;
-    margin-top: 30px;
-    margin-bottom: 50px;
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  transition: all 0.5s;
+  opacity: 0;
 }
-
 #footer a {
-    color: #4990e2;
-    text-decoration: none;
+  color: #4990e2;
+  text-decoration: none;
 }
-
 #footer a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
-
-.swagger-ui .topbar form.download-url-wrapper {
-    display: none;
-}
-
 .topbar .wrapper .topbar-wrapper {
-    position: relative;
+  position: relative;
 }
-
-.topbar .wrapper .topbar-wrapper:after {
-    content: 'qnnp/annotation-route';
-    display: block;
-    color: #fff;
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-    font-size: 26px;
-}
-
 .swagger-ui .info {
-    margin: 20px 0;
+  margin: 20px 0;
 }
-
 .swagger-ui .scheme-container {
-    padding: 10px 0;
-    margin: 0 0 20px 0;
+  padding: 10px 0;
+  margin: 0 0 20px 0;
 }
-
 .swagger-ui .opblock .opblock-summary-method {
-    font-weight: 400;
-    padding: 5px 10px;
-    font-size: 12px;
+  font-weight: 400;
+  padding: 5px 10px;
+  font-size: 12px;
 }
 .swagger-ui .opblock-tag {
-    font-size: 18px;
-    padding: 5px;
+  font-size: 18px;
+  padding: 5px;
 }
 .swagger-ui .opblock .opblock-summary-operation-id,
 .swagger-ui .opblock .opblock-summary-path,
 .swagger-ui .opblock .opblock-summary-path__deprecated {
-    font-size: 12px;
+  font-size: 12px;
 }
 .swagger-ui .btn,
 .swagger-ui select {
-    font-size: 12px;
+  font-size: 12px;
 }
 .swagger-ui .btn.authorize span {
-    padding: 4px 5px 0;
+  padding: 4px 5px 0;
 }
 .swagger-ui .btn.authorize svg {
-    width: 15px;
-    height: 15px;
+  width: 15px;
+  height: 15px;
 }
-.swagger-ui .wrapper {
-    max-width: 1000px;
-}
-/*# sourceMappingURL=webmanpress.css.map */
+/*# sourceMappingURL=qnnp-annotation-route.css.map */

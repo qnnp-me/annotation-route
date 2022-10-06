@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * This file is part of webman-auto-route.
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
@@ -7,7 +7,7 @@
  *
  * @author    qnnp<qnnp@qnnp.me>
  * @copyright qnnp<qnnp@qnnp.me>
- * @link      https://main.qnnp.me
+ * @link      https://qnnp.me
  * @license   https://opensource.org/licenses/MIT MIT License
  */
 

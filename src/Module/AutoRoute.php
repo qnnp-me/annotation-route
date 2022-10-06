@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * This file is part of webman-auto-route.
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
@@ -7,7 +7,7 @@
  *
  * @author    qnnp<qnnp@qnnp.me>
  * @copyright qnnp<qnnp@qnnp.me>
- * @link      https://main.qnnp.me
+ * @link      https://qnnp.me
  * @license   https://opensource.org/licenses/MIT MIT License
  */
 
@@ -21,6 +21,9 @@ use ReflectionException;
 
 class AutoRoute {
 
+  /**
+   * @var bool $openapi <span style="color:#E97230;">是否生成 OpenAPI 文档</span>
+   */
   protected static bool $openapi = true;
 
   /**
@@ -186,7 +189,7 @@ class AutoRoute {
         $path = preg_replace('/\-controller$/', '', $path);
         // 驼峰转换
         $path = strtolower(preg_replace("/([a-z0-9])([A-Z])/", "$1-$2", $path));
-        
+
         /** 设置路由路径 */
         $route->path = (string)$path;
         /** 添加路由 */

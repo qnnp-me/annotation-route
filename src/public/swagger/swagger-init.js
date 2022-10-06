@@ -1,4 +1,4 @@
-/**
+/*
  * This file is part of webman-auto-route.
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
@@ -6,7 +6,7 @@
  *
  * @author    qnnp<qnnp@qnnp.me>
  * @copyright qnnp<qnnp@qnnp.me>
- * @link      https://main.qnnp.me
+ * @link      https://qnnp.me
  * @license   https://opensource.org/licenses/MIT MIT License
  */
 
@@ -14,15 +14,19 @@ window.onload = function () {
     // Begin OpenAPI UI call region
     const ui  = SwaggerUIBundle(
         {
-            // displayRequestDuration: 60000,  // 请求超时时间？，毫秒
+            displayRequestDuration: 1800000,  // 请求超时时间？，毫秒
             // maxDisplayedTags    : 0,      // 显示标签组数量，0全部
             // requestSnippets     : {},     //
-            // urls                : [
-            //     {
-            //         name: window.location.protocol + "//" + window.location.host + "/openapi.json",
-            //         url : window.location.protocol + "//" + window.location.host + "/openapi.json"
-            //     }
-            // ],
+            urls        : [
+                {
+                    name: "Develop API: " + window.location.protocol + "//" + window.location.host + "/openapi.json",
+                    url : window.location.protocol + "//" + window.location.host + "/openapi.json"
+                },
+                {
+                    name: "Product API: " + window.location.protocol + "//" + window.location.host + "/openapi-product.json",
+                    url : window.location.protocol + "//" + window.location.host + "/openapi-product.json"
+                },
+            ],
             url         : window.location.protocol + "//" + window.location.host + "/openapi.json",
             dom_id      : '#swagger-ui',
             deepLinking : true,   // 链接自动打开 Tag

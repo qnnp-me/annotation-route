@@ -1,8 +1,6 @@
 # annotation-route
 webman annotation route plugin
-
 webman 自动注解路由插件，附带自动生成 OpenAPI 3.0 规范文档
-
 
 ## 示例
 ```php
@@ -51,8 +49,10 @@ class Index {
   }
 }
 ```
+
 ### SwaggerUI 显示效果
-![img.png](./docs/images/example-test-get.png)
+![示例截图](https://qnnp.me/wp-content/uploads/2022/10/example-test-get.png "示例截图")
+
 ### OpenAPI 结果
 ```json
 {

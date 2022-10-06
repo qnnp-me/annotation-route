@@ -36,6 +36,6 @@ Route::disableDefaultRoute();
  */
 Route::fallback(
   function () {
-    return Result::jsonError('资源不存在', 404, 404);
+    return Result::jsonError('Resource not found', 404, 404);
   }
 );

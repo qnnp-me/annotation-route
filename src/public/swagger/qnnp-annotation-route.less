@@ -13,7 +13,7 @@
 html {
   box-sizing: border-box;
   overflow: -moz-scrollbars-vertical;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 *,
@@ -34,6 +34,8 @@ body {
   text-align: center;
   margin-top: 30px;
   margin-bottom: 50px;
+  transition: all 0.5s;
+  opacity: 0;
 
   a {
     color: #4990e2;
@@ -46,7 +48,7 @@ body {
 }
 
 .swagger-ui .topbar form.download-url-wrapper {
-  display: none;
+  //display: none;
 }
 
 .topbar {
@@ -54,16 +56,16 @@ body {
     .topbar-wrapper {
       position: relative;
 
-      &:after {
-        content: 'qnnp/annotation-route';
-        display: block;
-        color: #fff;
-        position: absolute;
-        top: 50%;
-        right: 0;
-        transform: translateY(-50%);
-        font-size: 26px;
-      }
+      //&:after {
+      //  content: 'qnnp/annotation-route';
+      //  display: block;
+      //  color: #fff;
+      //  position: absolute;
+      //  top: 50%;
+      //  right: 0;
+      //  transform: translateY(-50%);
+      //  font-size: 26px;
+      //}
     }
   }
 }
@@ -86,7 +88,6 @@ body {
   font-size: 12px;
 }
 
-//
 .swagger-ui .opblock-tag {
   font-size: 18px;
   padding: 5px;
@@ -110,8 +111,4 @@ body {
 .swagger-ui .btn.authorize svg {
   width: 15px;
   height: 15px;
-}
-
-.swagger-ui .wrapper {
-  max-width: 1000px;
 }

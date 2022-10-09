@@ -11,11 +11,11 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  */
 
-namespace Qnnp\Route\Attributes;
+namespace Qnnp\WebmanRoute\Attributes;
 
 use Attribute;
 use FastRoute\RouteParser\Std;
-use Qnnp\Route\Module\{OpenAPI,
+use Qnnp\WebmanRoute\Module\{OpenAPI,
   OpenAPI\components,
   OpenAPI\externalDoc,
   OpenAPI\info,

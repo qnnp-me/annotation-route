@@ -11,10 +11,10 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  */
 
-namespace Qnnp\Route\Module;
+namespace Qnnp\WebmanRoute\Module;
 
 use Exception;
-use Qnnp\Route\Attributes\Route as RouteAttribute;
+use Qnnp\WebmanRoute\Attributes\Route as RouteAttribute;
 use ReflectionClass;
 use ReflectionException;
 

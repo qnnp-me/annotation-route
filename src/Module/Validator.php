@@ -11,7 +11,7 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  */
 
-namespace Qnnp\Route\Module;
+namespace Qnnp\WebmanRoute\Module;
 
 use Exception;
 use support\Request;

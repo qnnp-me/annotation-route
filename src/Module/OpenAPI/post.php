@@ -11,7 +11,7 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  */
 
-namespace Qnnp\Route\Module\OpenAPI;
+namespace Qnnp\WebmanRoute\Module\OpenAPI;
 
 
 class post extends operation {

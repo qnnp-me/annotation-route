@@ -2,7 +2,7 @@
   "name": "qnnp/webman-route",
   "type": "library",
   "license": "MIT",
-  "description": "Webman plugin qnnp/annotation-route",
+  "description": "Webman plugin qnnp/webman-route",
   "require": {
     "php": ">=8.0",
     "workerman/webman-framework": ">=1.0",
@@ -11,7 +11,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Qnnp\\Route\\": "./src"
+      "Qnnp\\WebmanRoute\\": "./src"
     }
   }
 }

@@ -11,11 +11,11 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  */
 
-namespace Qnnp\Route\Controller;
+namespace Qnnp\WebmanRoute\Controller;
 
 use Exception;
-use Qnnp\Route\Attributes\Route;
-use Qnnp\Route\Module\OpenAPI;
+use Qnnp\WebmanRoute\Attributes\Route;
+use Qnnp\WebmanRoute\Module\OpenAPI;
 use support\Request;
 use support\Response;
 

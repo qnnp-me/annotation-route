@@ -10,10 +10,10 @@ webman 自动注解路由插件，附带自动生成 OpenAPI 3.0 规范文档
 
 namespace app\api\controller
 
-use Qnnp\Route\Module\Result;use support\Request;
+use Qnnp\WebmanRoute\Module\Result;use support\Request;
 use support\Response;
 use Throwable;
-use Qnnp\Route\Attributes\Route;
+use Qnnp\WebmanRoute\Attributes\Route;
 
 class Index {
   #[Route(

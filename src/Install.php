@@ -1,5 +1,5 @@
 <?php
-namespace Qnnp\Route;
+namespace Qnnp\WebmanRoute;
 
 class Install
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Qnnp\Route\Module;
+namespace Qnnp\WebmanRoute\Module;
 
 use Throwable;
 use Webman\Exception\ExceptionHandler as WebmanExceptionHandler;

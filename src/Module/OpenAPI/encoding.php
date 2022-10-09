@@ -11,7 +11,7 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  */
 
-namespace Qnnp\Route\Module\OpenAPI;
+namespace Qnnp\WebmanRoute\Module\OpenAPI;
 
 /**
  * @link https://swagger.io/specification/#encoding-object 规范文档

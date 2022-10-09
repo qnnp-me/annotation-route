@@ -1,5 +1,5 @@
 {
-  "name": "qnnp/annotation-route",
+  "name": "qnnp/webman-route",
   "type": "library",
   "license": "MIT",
   "description": "Webman plugin qnnp/annotation-route",
@@ -11,7 +11,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Qnnp\\AnnotationRoute\\": "./src"
+      "Qnnp\\Route\\": "./src"
     }
   }
 }

@@ -11,7 +11,7 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  */
 
-namespace Qnnp\AnnotationRoute\Module\OpenAPI;
+namespace Qnnp\Route\Module\OpenAPI;
 
 /**
  * @link https://swagger.io/specification/#contact-object 规范文档

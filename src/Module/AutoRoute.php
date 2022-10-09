@@ -11,10 +11,10 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  */
 
-namespace Qnnp\AnnotationRoute\Module;
+namespace Qnnp\Route\Module;
 
 use Exception;
-use Qnnp\AnnotationRoute\Attributes\Route as RouteAttribute;
+use Qnnp\Route\Attributes\Route as RouteAttribute;
 use ReflectionClass;
 use ReflectionException;
 
@@ -25,6 +25,9 @@ class AutoRoute {
    * @var bool $openapi <span style="color:#E97230;">是否生成 OpenAPI 文档</span>
    */
   protected static bool $openapi = true;
+
+  protected static bool $appLoaded     = false;
+  protected static bool $openapiLoaded = false;
 
   /**
    * <h2 style="color:#E97230;">加载注解路由</h2>
@@ -40,15 +43,21 @@ class AutoRoute {
   static function load(array $list = [], bool $openapi = true): void {
     static::$openapi = $openapi;
     $class_list      = [];
-    // 扫描 /app 目录所有可用文件
-    static::scanClass('\app', app_path(), $class_list);
+    if (!self::$appLoaded) {
+      self::$appLoaded = true;
+      // 扫描 /app 目录所有可用文件
+      static::scanClass('\app', app_path(), $class_list);
+    }
 
-    // 扫描 OpenAPI 文件
-    $openapi && static::scanClass(
-      'Qnnp\AnnotationRoute\Controller',
-      dirname(__DIR__) . '/Controller',
-      $class_list
-    );
+    if (!self::$openapiLoaded && $openapi) {
+      self::$openapiLoaded = true;
+      // 扫描 OpenAPI 文件
+      static::scanClass(
+        'Qnnp\AnnotationRoute\Controller',
+        dirname(__DIR__) . '/Controller',
+        $class_list
+      );
+    }
 
     // 扫描给定的目录列表中所有可用类
     foreach ($list as $item) {
@@ -73,6 +82,9 @@ class AutoRoute {
    */
   protected static function scanClass(string $base_namespace, string $dir, array &$class_list): void {
     $dir = realpath($dir);
+
+    // $namespace = new ReflectionClass($base_namespace);
+    // echo $namespace->getFileName();
 
     /**
      * 读取PHP文件列表
@@ -191,7 +203,7 @@ class AutoRoute {
         $path = strtolower(preg_replace("/([a-z0-9])([A-Z])/", "$1-$2", $path));
 
         /** 设置路由路径 */
-        $route->path = (string)$path;
+        $route->path = $path;
         /** 添加路由 */
         $route->add($callback);
 

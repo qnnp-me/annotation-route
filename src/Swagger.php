@@ -11,11 +11,11 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  */
 
-namespace Qnnp\AnnotationRoute\Controller;
+namespace Qnnp\Route\Controller;
 
 use Exception;
-use Qnnp\AnnotationRoute\Attributes\Route;
-use Qnnp\AnnotationRoute\Module\OpenAPI;
+use Qnnp\Route\Attributes\Route;
+use Qnnp\Route\Module\OpenAPI;
 use support\Request;
 use support\Response;
 

@@ -3,16 +3,17 @@ webman annotation route plugin
 webman 自动注解路由插件，附带自动生成 OpenAPI 3.0 规范文档
 
 ## 示例
+
 ```php
 <?php
 # file:/app/api/controller/index.php
 
 namespace app\api\controller
 
-use Qnnp\AnnotationRoute\Module\Result;use support\Request;
+use Qnnp\Route\Module\Result;use support\Request;
 use support\Response;
 use Throwable;
-use Qnnp\AnnotationRoute\Attributes\Route;
+use Qnnp\Route\Attributes\Route;
 
 class Index {
   #[Route(

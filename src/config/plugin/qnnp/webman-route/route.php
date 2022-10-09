@@ -12,8 +12,8 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-use Qnnp\AnnotationRoute\Module\AutoRoute;
-use Qnnp\AnnotationRoute\Module\Result;
+use Qnnp\Route\Module\AutoRoute;
+use Qnnp\Route\Module\Result;
 use Webman\Route;
 
 /**

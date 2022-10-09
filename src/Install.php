@@ -1,5 +1,5 @@
 <?php
-namespace Qnnp\AnnotationRoute;
+namespace Qnnp\Route;
 
 class Install
 {
@@ -9,7 +9,7 @@ class Install
      * @var array
      */
     protected static $pathRelation = array (
-  'config/plugin/qnnp/annotation-route' => 'config/plugin/qnnp/annotation-route',
+  'config/plugin/qnnp/webman-route' => 'config/plugin/qnnp/webman-route',
 );
 
     /**

@@ -11,7 +11,7 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  */
 
-namespace Qnnp\AnnotationRoute\Module;
+namespace Qnnp\Route\Module;
 
 use Exception;
 use support\Request;

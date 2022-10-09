@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * This file is part of webman-auto-route.
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
@@ -7,15 +7,15 @@
  *
  * @author    qnnp<qnnp@qnnp.me>
  * @copyright qnnp<qnnp@qnnp.me>
- * @link      https://main.qnnp.me
+ * @link      https://qnnp.me
  * @license   https://opensource.org/licenses/MIT MIT License
  */
 
-namespace Qnnp\AnnotationRoute\Attributes;
+namespace Qnnp\Route\Attributes;
 
 use Attribute;
 use FastRoute\RouteParser\Std;
-use Qnnp\AnnotationRoute\Module\{OpenAPI,
+use Qnnp\Route\Module\{OpenAPI,
   OpenAPI\components,
   OpenAPI\externalDoc,
   OpenAPI\info,
@@ -319,7 +319,7 @@ class Route {
   ) {
 
     // 路由路径预处理
-    $this->path = (string)preg_replace("/^\.\//", '', $this->route);
+    $this->path = preg_replace("/^\.\//", '', $this->route);
 
     // 路由请求方法
     if (!is_array($this->methods)) $this->methods = [$this->methods];
@@ -417,8 +417,9 @@ class Route {
         $path .= "{$folder}";
       }
 
-      // ================================
-      // 处理 parameters header cookie get
+      /**
+       * @var parameter[] $parameters <span style="color:#E97230;">处理合并 parameters header cookie get</span>
+       */
       $parameters = [];
       $this->prepareParams($this->cookie, 'cookie', $parameters);
       $this->prepareParams($this->header, 'header', $parameters);
@@ -495,7 +496,7 @@ class Route {
     }
   }
 
-  protected function prepareParams($data, $type = false, &$parameters = [],) {
+  protected function prepareParams($data, $type = false, &$parameters = [],): void {
     foreach ($data as $key => $item) {
       if (is_array($item)) {
         if (!isset($item['name'])) {

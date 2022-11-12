@@ -59,7 +59,7 @@ class parameter {
   /**
    * <div style="color:#E97230;">string</div>
    *
-   * @see style
+   * @see styleEnum
    */
   const style = 'style';
   // TODO

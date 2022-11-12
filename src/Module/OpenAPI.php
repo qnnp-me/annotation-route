@@ -17,15 +17,15 @@ class OpenAPI {
   /**
    * @var string $openapi <span style="color:#E97230;">OpenAPI 版本，尽量不改，默认：3.0.3</span>
    */
-  protected static string $openapi              = '3.0.3';
-  protected static array  $info                 = [];
-  protected static array  $paths                = [];
-  protected static array  $tags                 = [];
-  protected static array  $components           = [];
-  protected static array  $security             = [];
-  protected static array  $servers              = [];
-  protected static array  $externalDocs         = [];
-  protected static array  $extend               = [];
+  protected static string $openapi      = '3.0.3';
+  protected static array  $info         = [];
+  protected static array  $paths        = [];
+  protected static array  $tags         = [];
+  protected static array  $components   = [];
+  protected static array  $security     = [];
+  protected static array  $servers      = [];
+  protected static array  $externalDocs = [];
+  protected static array  $extend       = [];
 
   static function toJson(): bool|string {
     return json_encode(static::toArray());
@@ -101,26 +101,6 @@ class OpenAPI {
 
   static function setTags(array $tags): void {
     static::$tags = array_replace_recursive(static::$tags, $tags);
-  }
-
-  static function setSchemes(array $schemes): void {
-    static::$schemes = array_replace_recursive(static::$schemes, $schemes);
-  }
-
-  static function setHost(string $host): void {
-    strlen($host) > 0 && static::$host = $host;
-  }
-
-  static function setBasePath(string $base_path): void {
-      $base_path ?? static::$base_path = $base_path;
-  }
-
-  static function setDefinitions(array $definitions): void {
-    static::$definitions = array_replace_recursive(static::$definitions, $definitions);
-  }
-
-  static function setSecurityDefinitions(array $security_definitions): void {
-    static::$security_definitions = array_replace_recursive(static::$security_definitions, $security_definitions);
   }
 
   static function setExternalDocs(array $externalDocs): void {

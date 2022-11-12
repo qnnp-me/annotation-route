@@ -36,7 +36,7 @@ class operation {
    * <div style="color:#E97230;">External Documentation Object</div>
    * <span style="color:#E97230;">外部文档</span>
    *
-   * @see externalDoc
+   * @see externalDocs
    */
   const externalDocs = 'externalDocs';
   /**

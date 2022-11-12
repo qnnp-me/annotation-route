@@ -11,7 +11,7 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  */
 
-namespace Qnnp\WebmanRoute\Attributes;
+namespace Qnnp\WebmanRoute\Attribute;
 
 use Attribute;
 use FastRoute\RouteParser\Std;
@@ -29,8 +29,7 @@ use Qnnp\WebmanRoute\Module\{OpenAPI,
   OpenAPI\securityScheme,
   OpenAPI\server,
   OpenAPI\tag,
-  Validator
-};
+  Validator};
 use ReflectionMethod;
 use support\Request;
 use Webman\{Route as RouteClass, Route\Route as RouteObject};
@@ -403,6 +402,7 @@ class Route {
       $this->openapi
       && !str_starts_with($this->path, '/swagger')
       && !str_starts_with($this->path, '/openapi.json')
+      && !str_starts_with($this->path, '/openapi-product.json')
     ) {
 
       // 处理路由路径

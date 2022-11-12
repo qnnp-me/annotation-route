@@ -3,15 +3,29 @@
   "type": "library",
   "license": "MIT",
   "description": "Webman plugin qnnp/webman-route",
+  "authors": [
+    {
+      "name": "qnnp",
+      "email": "qnnp@qnnp.me",
+      "homepage": "https://qnnp.me",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "email": "qnnp@qnnp.me",
+    "source": "https://github.com/qnnp-me/webman-route",
+    "issues": "https://github.com/qnnp-me/webman-route/issues"
+  },
   "require": {
     "php": ">=8.0",
-    "workerman/webman-framework": ">=1.0",
-    "workerman/validation": "^3.0",
-    "swagger-api/swagger-ui": "^3.48"
+    "swagger-api/swagger-ui": ">=4.0"
   },
   "autoload": {
     "psr-4": {
-      "Qnnp\\WebmanRoute\\": "./src"
-    }
+      "Qnnp\\WebmanRoute\\": "src"
+    },
+    "files": [
+      "src/helper.php"
+    ]
   }
 }

@@ -14,7 +14,7 @@
 namespace Qnnp\WebmanRoute\Module;
 
 use Exception;
-use Qnnp\WebmanRoute\Attributes\Route as RouteAttribute;
+use Qnnp\WebmanRoute\Attribute\Route;
 use ReflectionClass;
 use ReflectionException;
 
@@ -53,8 +53,8 @@ class AutoRoute {
       self::$openapiLoaded = true;
       // 扫描 OpenAPI 文件
       static::scanClass(
-        'Qnnp\AnnotationRoute\Controller',
-        dirname(__DIR__) . '/Controller',
+        '\Qnnp\WebmanRoute\Controller',
+        dirname(__DIR__).'/Controller',
         $class_list
       );
     }
@@ -151,14 +151,14 @@ class AutoRoute {
     foreach ($methods as $method) {
 
       /** 读取方法的路由注解 */
-      $attributes = $method->getAttributes(RouteAttribute::class);
+      $attributes = $method->getAttributes(Route::class);
 
       /** 遍历方法的所有路由 */
       foreach ($attributes as $attribute) {
         /**
          * 路由对象
          *
-         * @var RouteAttribute $route
+         * @var Route $route
          */
         $route = $attribute->newInstance();
 

@@ -66,7 +66,7 @@ class schema {
   /**
    * <div style="color:#E97230;">External Documentation Object</div>
    *
-   * @see externalDoc
+   * @see externalDocs
    */
   const externalDocs = 'externalDocs';
   /**

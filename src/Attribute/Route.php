@@ -15,53 +15,54 @@ namespace Qnnp\WebmanRoute\Attribute;
 
 use Attribute;
 use FastRoute\RouteParser\Std;
-use Qnnp\WebmanRoute\Attribute\OpenAPI\components;
-use Qnnp\WebmanRoute\Attribute\OpenAPI\externalDoc;
-use Qnnp\WebmanRoute\Attribute\OpenAPI\info;
-use Qnnp\WebmanRoute\Attribute\OpenAPI\media;
-use Qnnp\WebmanRoute\Attribute\OpenAPI\operation;
-use Qnnp\WebmanRoute\Attribute\OpenAPI\parameter;
-use Qnnp\WebmanRoute\Attribute\OpenAPI\post;
-use Qnnp\WebmanRoute\Attribute\OpenAPI\requestBody;
-use Qnnp\WebmanRoute\Attribute\OpenAPI\response;
-use Qnnp\WebmanRoute\Attribute\OpenAPI\schema;
-use Qnnp\WebmanRoute\Attribute\OpenAPI\securityScheme;
-use Qnnp\WebmanRoute\Attribute\OpenAPI\server;
-use Qnnp\WebmanRoute\Attribute\OpenAPI\tag;
-use Qnnp\WebmanRoute\Module\{OpenAPI};
+use Qnnp\WebmanRoute\Attribute\OpenAPI\{components,
+  externalDoc,
+  info,
+  media,
+  operation,
+  parameter,
+  post,
+  requestBody,
+  response,
+  schema,
+  securityScheme,
+  server,
+  tag
+};
 use Webman\{Route as RouteClass, Route\Route as RouteObject};
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD)]
-class Route {
-  public string   $path   = '';
+class Route
+{
+  public string $path = '';
   protected array $config = ['path' => '', 'method' => '', 'operation' => []];
 
   /**
    * <h2 style="color:#E97230;">注解路由</h2>
    * <a href="https://swagger.io/specification/#operation-object">OpenAPI 规范文档</a>
    *
-   * @param string                $route <span style="color:#E97230;">路由 Path</span>
+   * @param string $route <span style="color:#E97230;">路由 Path</span>
    *
-   * @param string|array          $methods <span style="color:#E97230;">路由方法 'get'|[get, head, post, put, delete,
+   * @param string|array $methods <span style="color:#E97230;">路由方法 'get'|[get, head, post, put, delete,
    *   connect, options, trace] </span>
    *
-   * @param array                 $middleware <span style="color:#E97230;">路由中间件</span>
+   * @param array $middleware <span style="color:#E97230;">路由中间件</span>
    * <a href="https://www.workerman.net/doc/webman#/middleware" style="color:#5A9BF6;">Webman 中间件介绍</a>
    * <pre style="color:#3982F7;">[ MiddleWare::class, ... ]</pre>
    * <hr/>
    *
-   * @param bool|null             $openapi <span style="color:#E97230;">是否在 OpenAPI 文档中显示此路由方法(true|false)</span>
+   * @param bool|null $openapi <span style="color:#E97230;">是否在 OpenAPI 文档中显示此路由方法(true|false)</span>
    * <hr/>
    *
-   * @param array|parameter       $cookie <span style="color:#E97230;">cookie 参数列表</span>
+   * @param array|parameter $cookie <span style="color:#E97230;">cookie 参数列表</span>
    * <a href="https://swagger.io/specification/#parameter-object" style="color:#5A9BF6;">规范文档</a>
    * <pre style="color:#3982F7;">['field1', 'field2' => [...], ...]</pre>
    *
-   * @param array|parameter       $header <span style="color:#E97230;">header 参数</span>
+   * @param array|parameter $header <span style="color:#E97230;">header 参数</span>
    * <a href="https://swagger.io/specification/#parameter-object" style="color:#5A9BF6;">规范文档</a>
    * <pre style="color:#3982F7;">['field1', 'field2' => [...], ...]</pre>
    *
-   * @param array|parameter       $get <span style="color:#E97230;">get 参数 [parameter]</span>
+   * @param array|parameter $get <span style="color:#E97230;">get 参数 [parameter]</span>
    * <a href="https://swagger.io/specification/#parameter-object" style="color:#5A9BF6;">规范文档</a>
    * <pre style="color:#3982F7;">[
    *    'field1',
@@ -73,7 +74,7 @@ class Route {
    *    ...
    *]</pre>
    *
-   * @param array|post            $post <span style="color:#E97230;">post 参数</span>
+   * @param array|post $post <span style="color:#E97230;">post 参数</span>
    * <a href="https://swagger.io/specification/#schema-object" style="color:#5A9BF6;">规范文档</a>
    * <pre style="color:#3982F7;">[
    *    'field1',
@@ -85,10 +86,10 @@ class Route {
    *    ...
    *]</pre>
    *
-   * @param array|post            $file <span style="color:#E97230;">上传文件参数，将会附加到 post 参数列表</span>
+   * @param array|post $file <span style="color:#E97230;">上传文件参数，将会附加到 post 参数列表</span>
    * <pre style="color:#3982F7;">['field1', 'field2' => [...],]</pre>
    *
-   * @param array                 $json <span style="color:#E97230;">json 参数</span>
+   * @param array $json <span style="color:#E97230;">json 参数</span>
    * <a href="https://swagger.io/specification/#schema-object" style="color:#5A9BF6;">规范文档</a>
    * <pre style="color:#3982F7;">[
    *    'field1',
@@ -100,7 +101,7 @@ class Route {
    *    ...
    *]</pre>
    *
-   * @param array                 $xml <span style="color:#E97230;">xml 参数，参数列表第一个 item 将作为 root 标签名、</span>
+   * @param array $xml <span style="color:#E97230;">xml 参数，参数列表第一个 item 将作为 root 标签名、</span>
    * <a href="https://swagger.io/specification/#schema-object" style="color:#5A9BF6;">规范文档</a>
    * <pre style="color:#3982F7;">[
    *    'root'   => 'tagName',
@@ -114,9 +115,9 @@ class Route {
    *]</pre>
    * <hr/>
    *
-   * @param bool                  $requireBody <span style="color:#E97230;">requestBody 数据是否必须</span>
+   * @param bool $requireBody <span style="color:#E97230;">requestBody 数据是否必须</span>
    *
-   * @param array|tag             $tags <span style="color:#E97230;">[Operation] 方法所属分组</span>
+   * @param array|tag $tags <span style="color:#E97230;">[Operation] 方法所属分组</span>
    * <div style="color:#E97230;">直接给 string 就可以，如果需要添加描述等信息只需要注解一次就会自动注册到全局。</div>
    * <pre style="color:#3982F7;">[
    *    '标签名称',
@@ -130,22 +131,22 @@ class Route {
    *     ]
    *]</pre>
    *
-   * @param string                $summary <span style="color:#E97230;">[Operation] 方法简介</span>
+   * @param string $summary <span style="color:#E97230;">[Operation] 方法简介</span>
    * <a href="https://swagger.io/specification/#operation-object" style="color:#5A9BF6;">规范文档</a>
    *
-   * @param string                $description <span style="color:#E97230;">[Operation] 方法详细说明</span>
+   * @param string $description <span style="color:#E97230;">[Operation] 方法详细说明</span>
    * <a href="https://swagger.io/specification/#operation-object" style="color:#5A9BF6;">规范文档</a>
    *
-   * @param array|externalDoc     $externalDocs <span style="color:#E97230;">[Operation] 方法外部文档</span>
+   * @param array|externalDoc $externalDocs <span style="color:#E97230;">[Operation] 方法外部文档</span>
    *<pre style="color:#3982F7;">[
    *    'description' => '文档描述',
    *    'url'         => '文档链接'
    *]</pre>
    *
-   * @param string|null           $operationId <span style="color:#E97230;">[Operation] 方法操作 ID，区分大小写且唯一</span>
+   * @param string|null $operationId <span style="color:#E97230;">[Operation] 方法操作 ID，区分大小写且唯一</span>
    * <a href="https://swagger.io/specification/#operation-object" style="color:#5A9BF6;">规范文档</a>
    *
-   * @param array|parameter       $parameters <span style="color:#E97230;">[Operation] 接受的参数列表</span>
+   * @param array|parameter $parameters <span style="color:#E97230;">[Operation] 接受的参数列表</span>
    * <a href="https://swagger.io/specification/#parameter-object" style="color:#5A9BF6;">规范文档</a>
    * <pre style="color:#3982F7;">[
    *    [
@@ -158,11 +159,11 @@ class Route {
    *    ...
    *]</pre>
    *
-   * @param array|requestBody     $requestBody <span style="color:#E97230;">[Operation] requestBody
+   * @param array|requestBody $requestBody <span style="color:#E97230;">[Operation] requestBody
    *     参数，上方四个快速设置参数满足不了的需求可以设置原生结构</span>
    * <a href="https://swagger.io/specification/#request-body-object" style="color:#5A9BF6;">标准文档</a>
    *
-   * @param array|response        $responses <span style="color:#E97230;">[Operation] 返回数据示例</span>
+   * @param array|response $responses <span style="color:#E97230;">[Operation] 返回数据示例</span>
    * <a href="https://swagger.io/specification/#responses-object" style="color:#5A9BF6;">规范文档</a>
    * <pre style="color:#3982F7;">[
    *    200 => [
@@ -179,25 +180,25 @@ class Route {
    *    ]
    *]</pre>
    *
-   * @param array                 $callbacks <span style="color:#E97230;">[Operation] </span>
+   * @param array $callbacks <span style="color:#E97230;">[Operation] </span>
    * <a href="https://swagger.io/specification/#callback-object" style="color:#5A9BF6;">规范文档</a>
    *
-   * @param bool                  $deprecated <span style="color:#E97230;">[Operation] 声明此方法是否已被废弃</span>
+   * @param bool $deprecated <span style="color:#E97230;">[Operation] 声明此方法是否已被废弃</span>
    *
-   * @param array                 $security <span style="color:#E97230;">[Operation] 安全声明</span>
+   * @param array $security <span style="color:#E97230;">[Operation] 安全声明</span>
    * <a href="https://swagger.io/specification/#security-requirement-object" style="color:#5A9BF6;">规范文档</a>
    *
-   * @param array|server          $servers <span style="color:#E97230;">[Operation] 服务器列表</span>
+   * @param array|server $servers <span style="color:#E97230;">[Operation] 服务器列表</span>
    * <a href="https://swagger.io/specification/#server-object" style="color:#5A9BF6;">规范文档</a>
    * <hr/>
    *
-   * @param array|operation       $extend <span style="color:#E97230;">[Operation] 扩展选项</span>
+   * @param array|operation $extend <span style="color:#E97230;">[Operation] 扩展选项</span>
    * <a href="https://swagger.io/specification/#operation-object" style="color:#5A9BF6;">规范文档</a>
    * <div style="color:#E97230;">用于扩展方法的选项、也可以用于强制替换方法选项</div>
    *
-   * @param string|null           $Openapi <span style="color:#E97230;">[OpenAPI] OpenAPI 规范版本  (此行以下参数全局声明一次即可)</span>
+   * @param string|null $Openapi <span style="color:#E97230;">[OpenAPI] OpenAPI 规范版本  (此行以下参数全局声明一次即可)</span>
    *
-   * @param array|info            $Info <span style="color:#E97230;">[OpenAPI] 文档信息</span>
+   * @param array|info $Info <span style="color:#E97230;">[OpenAPI] 文档信息</span>
    * <pre style="color:#3982F7;">[
    *    'title'          => '项目名称',
    *    'description'    => '项目描述',
@@ -214,7 +215,7 @@ class Route {
    *    ]
    *]</pre>
    *
-   * @param array|server          $Servers <span style="color:#E97230;">[OpenAPI] 接口服务器列表</span>
+   * @param array|server $Servers <span style="color:#E97230;">[OpenAPI] 接口服务器列表</span>
    * <pre style="color:#3982F7;">[
    *    [
    *        'url'         => 'https://development.gigantic-server.com/v1',
@@ -243,16 +244,16 @@ class Route {
    *    ...
    *]</pre>
    *
-   * @param array|components      $Components <span style="color:#E97230;">[OpenAPI] 公共组件</span>
+   * @param array|components $Components <span style="color:#E97230;">[OpenAPI] 公共组件</span>
    * <a href="https://swagger.io/specification/#components-object" style="color:#5A9BF6;">规范文档</a>
    *
-   * @param array|securityScheme  $SecuritySchemes <span style="color:#E97230;">[OpenAPI] 认证方式声明</span>
+   * @param array|securityScheme $SecuritySchemes <span style="color:#E97230;">[OpenAPI] 认证方式声明</span>
    * <a href="https://swagger.io/specification/#security-scheme-object" style="color:#5A9BF6;">规范文档</a>
    *
-   * @param array                 $Security <span style="color:#E97230;">[OpenAPI] 全局可选认证方式</span>
+   * @param array $Security <span style="color:#E97230;">[OpenAPI] 全局可选认证方式</span>
    * <a href="https://swagger.io/specification/#security-requirement-object" style="color:#5A9BF6;">规范文档</a>
    *
-   * @param array|tag             $Tags <span style="color:#E97230;">[OpenAPI] Tag 描述列表</span>
+   * @param array|tag $Tags <span style="color:#E97230;">[OpenAPI] Tag 描述列表</span>
    * <pre style="color:#3982F7;">[
    *    'name'         => '标签名称',
    *    'description'  => '标签描述',
@@ -262,43 +263,43 @@ class Route {
    *    ]
    *]</pre>
    *
-   * @param array|externalDoc     $ExternalDocs <span style="color:#E97230;">[OpenAPI] 服务器列表</span>
+   * @param array|externalDoc $ExternalDocs <span style="color:#E97230;">[OpenAPI] 服务器列表</span>
    * <a href="https://swagger.io/specification/#server-object" style="color:#5A9BF6;">规范文档</a>
    *
    * @param \Qnnp\WebmanRoute\Attribute\OpenAPI\openapi|array $Extend <span style="color:#E97230;">[OpenAPI] 全局扩展选项</span>
    * <a href="https://swagger.io/specification/#openapi-object" style="color:#5A9BF6;">规范文档</a>
    * <div style="color:#E97230;">用于扩展根对象下的选项、也可以用于强制替换全局设置</div>
    *
-   * @param null                  $validator <span style="color:#E97230;">自定义方法参数验证器，设置后默认验证器将失效</span>
+   * @param null $validator <span style="color:#E97230;">自定义方法参数验证器，设置后默认验证器将失效</span>
    *
    * @link https://swagger.io/specification/#operation-object Operation 规范
    * @link https://swagger.io/specification/ OpenAPI 标准
    */
   public function __construct(
-    protected string                $route = '',
-    protected string|array          $methods = 'get',
-    protected array                 $middleware = [],
-    protected bool                  $openapi = true,
-    protected array|parameter       $cookie = [],
-    protected array|parameter       $header = [],
-    protected array|parameter       $get = [],
-    protected post|array            $post = [],
-    protected post|array            $file = [],
-    protected array                 $json = [],
-    protected array                 $xml = [],
-    protected bool                  $requireBody = false,
-    protected array|tag             $tags = [],
-    protected string                $summary = '',
-    protected string                $description = '',
-    protected externalDoc|array     $externalDocs = [],
-    protected string                $operationId = '',
-    protected array|parameter       $parameters = [],
-    protected requestBody|array     $requestBody = [],
-    protected response|array        $responses = [],
-    protected array                 $callbacks = [],
-    protected bool                  $deprecated = false,
-    protected array                 $security = [],
-    protected server|array          $servers = [],
+    protected string                                            $route = '',
+    protected string|array                                      $methods = 'get',
+    protected array                                             $middleware = [],
+    protected bool                                              $openapi = true,
+    protected array|parameter                                   $cookie = [],
+    protected array|parameter                                   $header = [],
+    protected array|parameter                                   $get = [],
+    protected post|array                                        $post = [],
+    protected post|array                                        $file = [],
+    protected array                                             $json = [],
+    protected array                                             $xml = [],
+    protected bool                                              $requireBody = false,
+    protected array|tag                                         $tags = [],
+    protected string                                            $summary = '',
+    protected string                                            $description = '',
+    protected externalDoc|array                                 $externalDocs = [],
+    protected string                                            $operationId = '',
+    protected array|parameter                                   $parameters = [],
+    protected requestBody|array                                 $requestBody = [],
+    protected response|array                                    $responses = [],
+    protected array                                             $callbacks = [],
+    protected bool                                              $deprecated = false,
+    protected array                                             $security = [],
+    protected server|array                                      $servers = [],
     protected operation|array                                   $extend = [],
 
     protected string                                            $Openapi = '',
@@ -358,7 +359,8 @@ class Route {
    *
    * @param mixed $callback <span style="color:#E97230;">路由调用方法</span>
    */
-  public function add(mixed $callback): RouteObject {
+  public function add(mixed $callback): RouteObject
+  {
     $callback = RouteClass::convertToCallable($this->path, $callback);
 
     return RouteClass::add(
@@ -395,7 +397,8 @@ class Route {
   /**
    * <h2 style="color:#E97230;">注册到 OpenAPI</h2>
    */
-  public function addToOpenAPI(): void {
+  public function addToOpenAPI(): void
+  {
     if (
       $this->openapi
       && !str_starts_with($this->path, '/swagger')
@@ -404,13 +407,13 @@ class Route {
     ) {
 
       // 处理路由路径
-      $paths       = (new Std)->parse($this->path)[0];
-      $path        = '';
+      $paths = (new Std)->parse($this->path)[0];
+      $path = '';
       $path_params = [];
       foreach ($paths as $folder) {
         if (is_array($folder)) {
           $path_params[$folder[0]] = [$folder[1], 0];
-          $folder                  = "{{$folder[0]}}";
+          $folder = "{{$folder[0]}}";
         }
         $path .= "{$folder}";
       }
@@ -429,8 +432,8 @@ class Route {
         // 读取出路径参数正则内的注释
         $is_matched = preg_match("/(\(\?#[^)]*([^)]*([^(]*\([^()]*\)[^)]*(?R)*)[^(]*)*[^(]*\))/", $conf[0], $matches);
         // 生成字段描述
-        $desc             = $is_matched ? preg_replace("/(^\(\?#|\)$)/", '', $matches[1]) : '路径参数';
-        $pattern          = "^" . ($is_matched ? str_replace($matches[1], '', $conf[0]) : $conf[0]) . "$";
+        $desc = $is_matched ? preg_replace("/(^\(\?#|\)$)/", '', $matches[1]) : '路径参数';
+        $pattern = "^" . ($is_matched ? str_replace($matches[1], '', $conf[0]) : $conf[0]) . "$";
         $path_name_list[] = [
           parameter::name        => $name,
           parameter::in          => 'path',
@@ -487,14 +490,15 @@ class Route {
       $operation = array_replace_recursive($operation, $this->extend);
 
       foreach ($this->methods as $method) {
-        $method       = strtolower($method);
+        $method = strtolower($method);
         $this->config = ['path' => $path, 'method' => $method, 'operation' => $operation];
         OpenAPI::addPath([$path => [$method => $operation]]);
       }
     }
   }
 
-  protected function prepareParams($data, $type = false, &$parameters = [],): void {
+  protected function prepareParams($data, $type = false, &$parameters = [],): void
+  {
     foreach ($data as $key => $item) {
       if (is_array($item)) {
         if (!isset($item['name'])) {
@@ -505,13 +509,14 @@ class Route {
         $item = ['name' => $item];
         $type && $item['in'] = $type;
       }
-      $default      = ['in' => 'query', 'schema' => ['type' => 'string']];
-      $item         = array_replace_recursive($default, $item);
+      $default = ['in' => 'query', 'schema' => ['type' => 'string']];
+      $item = array_replace_recursive($default, $item);
       $parameters[] = $item;
     }
   }
 
-  protected function prepareBody($fields, $type = 'post',) {
+  protected function prepareBody($fields, $type = 'post',)
+  {
     if (count($fields) == 0) return null;
     //
     $request_type = match ($type) {
@@ -524,8 +529,8 @@ class Route {
       $request_type = 'multipart/form-data';
     }
     $properties = [];
-    $required   = [];
-    $xml_root   = 'root';
+    $required = [];
+    $xml_root = 'root';
     if ($type == 'xml') {
       if (isset($fields['root'])) {
         $xml_root = $fields['root'];
@@ -546,7 +551,7 @@ class Route {
         // 携带文件上传字段的话转成 multipart/form-data
         // 因为 webman 框架的 $request->file() 只 支持这种形式的上传
         if (isset($conf['type']) && $conf['type'] == 'file') { // 规范不支持 type = file
-          $conf['type']   = 'string';
+          $conf['type'] = 'string';
           $conf['format'] = 'binary';
         }
         if ($type == 'post' && isset($conf['format']) && $conf['format'] == 'binary') {

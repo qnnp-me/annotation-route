@@ -367,30 +367,31 @@ class Route {
     return RouteClass::add(
       $this->methods,
       $this->path,
-      function (Request $request, ...$parameters) use ($callback) {
-        //  应注意作用域问题！
-        $custom_validator = $this->validator;
-        $config           = $this->config;
-
-        $request->route_config = $config;
-
-        // 用户自定义验证器
-        if (is_callable($custom_validator)) {
-          $verifiedData = $custom_validator($request, ...$parameters);
-        } else {
-          // 默认验证器
-          $verifiedData = Validator::validate($request, ...$parameters);
-        }
-
-        // 传递验证后的数据
-        $request->verifiedData = $verifiedData;
-
-        $ref = new ReflectionMethod(...$callback);
-
-        $callback[0] = $ref->isStatic() ? $callback[0] : new $callback[0]();
-
-        return $callback($request, ...$parameters);
-      }
+      $callback
+//      function (Request $request, ...$parameters) use ($callback) {
+//        //  应注意作用域问题！
+//        $custom_validator = $this->validator;
+//        $config           = $this->config;
+//
+//        $request->route_config = $config;
+//
+//        // 用户自定义验证器
+//        if (is_callable($custom_validator)) {
+//          $verifiedData = $custom_validator($request, ...$parameters);
+//        } else {
+//          // 默认验证器
+//          $verifiedData = Validator::validate($request, ...$parameters);
+//        }
+//
+//        // 传递验证后的数据
+//        $request->verifiedData = $verifiedData;
+//
+//        $ref = new ReflectionMethod(...$callback);
+//
+//        $callback[0] = $ref->isStatic() ? $callback[0] : new $callback[0]();
+//
+//        return $callback($request, ...$parameters);
+//      }
     )->middleware($this->middleware);
   }
 
@@ -521,11 +522,13 @@ class Route {
       'json' => 'application/json',
       'xml' => 'application/xml',
       default => 'application/x-www-form-urlencoded'
-
     };
-    $properties   = [];
-    $required     = [];
-    $xml_root     = 'root';
+    if (count($this->file) > 0) {
+      $request_type = 'multipart/form-data';
+    }
+    $properties = [];
+    $required   = [];
+    $xml_root   = 'root';
     if ($type == 'xml') {
       if (isset($fields['root'])) {
         $xml_root = $fields['root'];
@@ -549,13 +552,8 @@ class Route {
           $conf['type']   = 'string';
           $conf['format'] = 'binary';
         }
-        if ($type == 'post') {
-          if (
-            (isset($conf['format']) && $conf['format'] == 'binary')
-            || count($this->file) > 0
-          ) {
-            $request_type = 'multipart/form-data';
-          }
+        if ($type == 'post' && isset($conf['format']) && $conf['format'] == 'binary') {
+          $request_type = 'multipart/form-data';
         }
         if (!isset($conf['type'])) $conf['type'] = 'string';
         $properties[$key] = $conf;

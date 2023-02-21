@@ -46,24 +46,24 @@ class Result {
     bool   $raw = false,
     bool   $remove_data = false
   ): Response {
-    $_data = [
+    $result = [
       'code'    => $error_code ?: $http_code,
       'message' => $message,
     ];
     if (!$remove_data) {
       if ($raw) {
-        $_data['data'] = $data;
+        $result['data'] = $data;
 
       } else {
-        $_data['data'] = json_decode(json_encode($data), 1);
+        $result['data'] = json_decode(json_encode($data), 1);
       }
     }
-    $trace && $_data['trace'] = $trace;
+    $trace && $result['trace'] = $trace;
 
     return new Response(
       $http_code, ['Content-Type' => 'application/json', ...$headers],
       json_encode(
-        $_data,
+        $result,
         $option
       )
     );

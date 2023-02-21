@@ -29,6 +29,7 @@ use Qnnp\WebmanRoute\Attribute\OpenAPI\{components,
   server,
   tag
 };
+use Qnnp\WebmanRoute\Module\OpenAPI;
 use Webman\{Route as RouteClass, Route\Route as RouteObject};
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD)]

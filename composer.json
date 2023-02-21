@@ -23,9 +23,6 @@
   "autoload": {
     "psr-4": {
       "Qnnp\\WebmanRoute\\": "src"
-    },
-    "files": [
-      "src/helper.php"
-    ]
+    }
   }
 }

@@ -14,6 +14,7 @@
 
 use Qnnp\WebmanRoute\Module\AutoRoute;
 use Qnnp\WebmanRoute\Module\Result;
+use support\exception\BusinessException;
 use Webman\Route;
 
 /**
@@ -36,6 +37,6 @@ Route::disableDefaultRoute();
  */
 Route::fallback(
   function () {
-    return Result::jsonError('Resource not found', 404, 404);
+    throw new BusinessException('Resource not found', 404);
   }
 );

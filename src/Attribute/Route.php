@@ -15,23 +15,20 @@ namespace Qnnp\WebmanRoute\Attribute;
 
 use Attribute;
 use FastRoute\RouteParser\Std;
-use Qnnp\WebmanRoute\Module\{OpenAPI,
-  OpenAPI\components,
-  OpenAPI\externalDoc,
-  OpenAPI\info,
-  OpenAPI\media,
-  OpenAPI\operation,
-  OpenAPI\parameter,
-  OpenAPI\post,
-  OpenAPI\requestBody,
-  OpenAPI\response,
-  OpenAPI\schema,
-  OpenAPI\securityScheme,
-  OpenAPI\server,
-  OpenAPI\tag,
-  Validator};
-use ReflectionMethod;
-use support\Request;
+use Qnnp\WebmanRoute\Attribute\OpenAPI\components;
+use Qnnp\WebmanRoute\Attribute\OpenAPI\externalDoc;
+use Qnnp\WebmanRoute\Attribute\OpenAPI\info;
+use Qnnp\WebmanRoute\Attribute\OpenAPI\media;
+use Qnnp\WebmanRoute\Attribute\OpenAPI\operation;
+use Qnnp\WebmanRoute\Attribute\OpenAPI\parameter;
+use Qnnp\WebmanRoute\Attribute\OpenAPI\post;
+use Qnnp\WebmanRoute\Attribute\OpenAPI\requestBody;
+use Qnnp\WebmanRoute\Attribute\OpenAPI\response;
+use Qnnp\WebmanRoute\Attribute\OpenAPI\schema;
+use Qnnp\WebmanRoute\Attribute\OpenAPI\securityScheme;
+use Qnnp\WebmanRoute\Attribute\OpenAPI\server;
+use Qnnp\WebmanRoute\Attribute\OpenAPI\tag;
+use Qnnp\WebmanRoute\Module\{OpenAPI};
 use Webman\{Route as RouteClass, Route\Route as RouteObject};
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD)]
@@ -268,7 +265,7 @@ class Route {
    * @param array|externalDoc     $ExternalDocs <span style="color:#E97230;">[OpenAPI] 服务器列表</span>
    * <a href="https://swagger.io/specification/#server-object" style="color:#5A9BF6;">规范文档</a>
    *
-   * @param OpenAPI\openapi|array $Extend <span style="color:#E97230;">[OpenAPI] 全局扩展选项</span>
+   * @param \Qnnp\WebmanRoute\Attribute\OpenAPI\openapi|array $Extend <span style="color:#E97230;">[OpenAPI] 全局扩展选项</span>
    * <a href="https://swagger.io/specification/#openapi-object" style="color:#5A9BF6;">规范文档</a>
    * <div style="color:#E97230;">用于扩展根对象下的选项、也可以用于强制替换全局设置</div>
    *
@@ -302,19 +299,19 @@ class Route {
     protected bool                  $deprecated = false,
     protected array                 $security = [],
     protected server|array          $servers = [],
-    protected operation|array       $extend = [],
+    protected operation|array                                   $extend = [],
 
-    protected string                $Openapi = '',
-    protected array|info            $Info = [],
-    protected server|array          $Servers = [],
-    protected array|components      $Components = [],
-    protected securityScheme|array  $SecuritySchemes = [],
-    protected array                 $Security = [],
-    protected array|tag             $Tags = [],
-    protected externalDoc|array     $ExternalDocs = [],
-    protected array|OpenAPI\openapi $Extend = [],
+    protected string                                            $Openapi = '',
+    protected array|info                                        $Info = [],
+    protected server|array                                      $Servers = [],
+    protected array|components                                  $Components = [],
+    protected securityScheme|array                              $SecuritySchemes = [],
+    protected array                                             $Security = [],
+    protected array|tag                                         $Tags = [],
+    protected externalDoc|array                                 $ExternalDocs = [],
+    protected array|\Qnnp\WebmanRoute\Attribute\OpenAPI\openapi $Extend = [],
 
-    protected                       $validator = null
+    protected                                                   $validator = null
   ) {
 
     // 路由路径预处理

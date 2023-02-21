@@ -14,19 +14,20 @@
 namespace Qnnp\WebmanRoute\Module;
 
 use Exception;
-use Qnnp\WebmanRoute\Attributes\Route as RouteAttribute;
+use Qnnp\WebmanRoute\Attribute\Route as RouteAttribute;
 use ReflectionClass;
 use ReflectionException;
 
 
-class AutoRoute {
+class AutoRoute
+{
 
   /**
    * @var bool $openapi <span style="color:#E97230;">是否生成 OpenAPI 文档</span>
    */
   protected static bool $openapi = true;
 
-  protected static bool $appLoaded     = false;
+  protected static bool $appLoaded = false;
   protected static bool $openapiLoaded = false;
 
   /**
@@ -36,13 +37,14 @@ class AutoRoute {
    * @param array $list <span style="color:#E97230;">需要另外加载的目录</span>
    *                    <pre style="color:#E97230;">[ [命名空间根, 目录绝对路径], ...array]</pre>
    *
-   * @param bool  $openapi <span style="color:#E97230;">OpenAPI 文档开关（默认：true）</span>
+   * @param bool $openapi <span style="color:#E97230;">OpenAPI 文档开关（默认：true）</span>
    *
    * @throws ReflectionException
    */
-  static function load(array $list = [], bool $openapi = true): void {
+  static function load(array $list = [], bool $openapi = true): void
+  {
     static::$openapi = $openapi;
-    $class_list      = [];
+    $class_list = [];
     if (!self::$appLoaded) {
       self::$appLoaded = true;
       // 扫描 /app 目录所有可用文件
@@ -53,7 +55,7 @@ class AutoRoute {
       self::$openapiLoaded = true;
       // 扫描 OpenAPI 文件
       static::scanClass(
-        'Qnnp\AnnotationRoute\Controller',
+        'Qnnp\WebmanRoute\Controller',
         dirname(__DIR__) . '/Controller',
         $class_list
       );
@@ -78,9 +80,10 @@ class AutoRoute {
    *
    * @param string $base_namespace <span style="color:#E97230;">对应的命名空间根</span>
    * @param string $dir <span style="color:#E97230;">目录</span>
-   * @param array  $class_list <span style="color:#E97230;">引用列表</span>
+   * @param array $class_list <span style="color:#E97230;">引用列表</span>
    */
-  protected static function scanClass(string $base_namespace, string $dir, array &$class_list): void {
+  protected static function scanClass(string $base_namespace, string $dir, array &$class_list): void
+  {
     $dir = realpath($dir);
 
     // $namespace = new ReflectionClass($base_namespace);
@@ -111,7 +114,8 @@ class AutoRoute {
    *
    * @return array
    */
-  protected static function scanFiles(string $dir): array {
+  protected static function scanFiles(string $dir): array
+  {
     $dir = realpath($dir);
 
     if (!is_dir($dir))
@@ -124,7 +128,7 @@ class AutoRoute {
         $item_path = $dir . DIRECTORY_SEPARATOR . $item;
         if (is_dir($item_path)) {
           array_push($files, ...static::scanFiles($item_path));
-        } elseif (preg_match("/\.php$/i", $item)) {
+        } elseif (preg_match("/\.php$/i", $item) && preg_match("/controller/i", $item_path)) {
           $files[] = $item_path;
         }
       }
@@ -142,7 +146,8 @@ class AutoRoute {
    * @throws ReflectionException
    * @throws Exception
    */
-  protected static function scanRoute(string $class, string $namespace): void {
+  protected static function scanRoute(string $class, string $namespace): void
+  {
     /** 给定类的反射类 */
     $ref = new ReflectionClass($class);
     /** 获取类里的所有方法 */
@@ -178,11 +183,11 @@ class AutoRoute {
         /** 相对路径子路由处理 */
         if (!preg_match("/^[\/\\\]/", $path)) {
           // 驼峰转换
-          $basePath      = strtolower(preg_replace("/([a-z0-9])([A-Z])/", "$1-$2", $ref->name));
+          $basePath = strtolower(preg_replace("/([a-z0-9])([A-Z])/", "$1-$2", $ref->name));
           $baseNamespace = strtolower(preg_replace("/([a-z0-9])([A-Z])/", "$1-$2", $namespace));
 
           // 反斜杠处理
-          $basePath      = str_replace('\\', '/', $basePath);
+          $basePath = str_replace('\\', '/', $basePath);
           $baseNamespace = str_replace('\\', '/', $baseNamespace);
           $baseNamespace = preg_replace('/^\//', '', $baseNamespace); // 去除用户可能携带的开头斜杠
 
@@ -197,8 +202,7 @@ class AutoRoute {
           // 拼接实际路径
           $path = $basePath . (empty($path) ? '' : '/' . $path);
         }
-        $path = str_replace('-controller/', '/', $path);
-        $path = preg_replace('/\-controller$/', '', $path);
+        $path = preg_replace('/-controller/', '', $path);
         // 驼峰转换
         $path = strtolower(preg_replace("/([a-z0-9])([A-Z])/", "$1-$2", $path));
 
